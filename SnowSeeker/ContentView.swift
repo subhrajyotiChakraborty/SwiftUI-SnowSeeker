@@ -8,55 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    // Working with two side by side views in SwiftUI
-    
-    //    var body: some View {
-    //        NavigationView {
-    //            NavigationLink(destination: Text("New secondary")) {
-    //                Text("Hello, World!")
-    //            }
-    //            .navigationBarTitle("Primary")
-    //
-    //            Text("Secondary")
-    //        }
-    //    }
-    
-    
-    // Using alert() and sheet() with optionals
-    
-    //    @State private var selectedUser: User? = nil
-    //
-    //    var body: some View {
-    //        Text("Hello, World!")
-    //            .onTapGesture {
-    //                self.selectedUser = User()
-    //            }
-    //            .alert(item: $selectedUser) { (user) -> Alert in
-    //                Alert(title: Text(user.id))
-    //            }
-    //    }
-    
-    
-    // Using groups as transparent layout containers
-    
-    @Environment (\.horizontalSizeClass) var sizeClass
+    let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
     var body: some View {
-        Group {
-            if sizeClass == .compact {
-                //                VStack {
-                //                    UserView()
-                //                }
-                // In situations like this, where you have only one view inside a stack and it doesn’t take any parameters, you can pass the view’s initializer directly to the VStack to make your code shorter:
-                VStack (content: UserView.init)
-            } else {
-                //                HStack {
-                //                    UserView()
-                //                }
-                HStack (content: UserView.init)
+        NavigationView {
+            List(resorts) { resort in
+                NavigationLink(destination: ResortView(resort: resort)) {
+                    Image(resort.country)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40, height: 25)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 5)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                    
+                    VStack(alignment: .leading) {
+                        Text(resort.name)
+                            .font(.headline)
+                        Text("\(resort.runs) runs")
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
+            .navigationBarTitle("Resorts")
+            
+            WelcomeView()
         }
+//        .phoneOnlyStackNavigationView()
     }
 }
 
@@ -66,12 +48,12 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct User: Identifiable {
-    var id = "Taylor Swift"
-}
-
-struct UserView: View {
-    var body: some View {
-        Text("Hello World")
-    }
-}
+//extension View {
+//    func phoneOnlyStackNavigationView() -> some View {
+//        if UIDevice.current.userInterfaceIdiom == .phone {
+//            return AnyView(self.navigationViewStyle(StackNavigationViewStyle()))
+//        } else {
+//            return AnyView(self)
+//        }
+//    }
+//}
