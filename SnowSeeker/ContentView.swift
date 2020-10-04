@@ -9,11 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
+    @State private var sortedResorts = [Resort]()
+    @State private var isSortByCountry = false
     @ObservedObject var favorites = Favorites()
+    
+    func sortResorts() {
+        if isSortByCountry {
+            self.sortedResorts = self.sortedResorts.sorted(by: { (lhs, rhs) -> Bool in
+                lhs.country < rhs.country
+            })
+        } else {
+            self.sortedResorts = self.sortedResorts.sorted(by: { (lhs, rhs) -> Bool in
+                lhs.name < rhs.name
+            })
+        }
+    }
     
     var body: some View {
         NavigationView {
-            List(resorts) { resort in
+            List(sortedResorts) { resort in
                 NavigationLink(destination: ResortView(resort: resort)) {
                     Image(resort.country)
                         .resizable()
@@ -44,6 +58,17 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("Resorts")
+            .navigationBarItems(trailing: Button(self.isSortByCountry ? "Sort By Name" : "Sort By Country") {
+                self.isSortByCountry.toggle()
+                self.sortResorts()
+            })
+            .onAppear(perform: {
+                self.sortedResorts = self.resorts
+                self.sortedResorts = self.sortedResorts.sorted(by: { (lhs, rhs) -> Bool in
+                    lhs.name < rhs.name
+                })
+            })
+            
             
             WelcomeView()
         }
