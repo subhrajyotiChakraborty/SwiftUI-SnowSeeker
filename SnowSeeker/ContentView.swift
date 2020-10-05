@@ -11,7 +11,35 @@ struct ContentView: View {
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
     @State private var sortedResorts = [Resort]()
     @State private var isSortByCountry = false
+    @State private var showFilterOptions = false
+    @State private var selectedCountry = 0
+    @State private var selectedResortSize = 0
+    @State private var countries = ["All", "France", "Italy", "Canada", "Austria", "United States"]
+    @State private var isFilterApplied = false
+    @State private var filterByCountry = false
     @ObservedObject var favorites = Favorites()
+    let resortSizeArray = ["All", "Small", "Medium", "Large"]
+    
+    func applyFilter() {
+        
+        isFilterApplied = true
+        
+        if selectedCountry != 0 {
+            self.sortedResorts = self.resorts.filter { (resort) -> Bool in
+                resort.country == countries[selectedCountry]
+            }
+        }
+        
+        if selectedResortSize != 0 {
+            self.sortedResorts = self.resorts.filter { (resort) -> Bool in
+                resort.size == selectedResortSize
+            }
+        }
+        
+        if selectedCountry == 0 && selectedResortSize == 0 {
+            self.sortedResorts = self.resorts
+        }
+    }
     
     func sortResorts() {
         if isSortByCountry {
@@ -22,6 +50,17 @@ struct ContentView: View {
             self.sortedResorts = self.sortedResorts.sorted(by: { (lhs, rhs) -> Bool in
                 lhs.name < rhs.name
             })
+        }
+    }
+    
+    func onLoad() {
+        self.sortedResorts = self.resorts
+        self.sortedResorts = self.sortedResorts.sorted(by: { (lhs, rhs) -> Bool in
+            lhs.name < rhs.name
+        })
+        
+        if isFilterApplied {
+            applyFilter()
         }
     }
     
@@ -58,14 +97,26 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("Resorts")
-            .navigationBarItems(trailing: Button(self.isSortByCountry ? "Sort By Name" : "Sort By Country") {
+            .navigationBarItems(leading: Button("Filter") {
+                self.showFilterOptions.toggle()
+            }, trailing: Button(action: {
                 self.isSortByCountry.toggle()
                 self.sortResorts()
-            })
+            }, label: {
+                if self.isSortByCountry {
+                    Image(systemName: "arrow.up.arrow.down.circle")
+                    Text("Name")
+                } else {
+                    Image(systemName: "arrow.up.arrow.down.circle")
+                    Text("Country")
+                }
+            }))
             .onAppear(perform: {
-                self.sortedResorts = self.resorts
-                self.sortedResorts = self.sortedResorts.sorted(by: { (lhs, rhs) -> Bool in
-                    lhs.name < rhs.name
+                self.onLoad()
+            })
+            .sheet(isPresented: $showFilterOptions, content: {
+                FilterOptionsView(filterByCountry: self.$filterByCountry, selectedResortSize: self.$selectedResortSize, selectedCountry: self.$selectedCountry, resortSizes: self.resortSizeArray, countries: self.countries, applyFilter: {
+                    self.applyFilter()
                 })
             })
             
