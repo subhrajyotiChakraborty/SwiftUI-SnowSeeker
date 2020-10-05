@@ -20,6 +20,7 @@
 		22612C6C25261B48006B7B6F /* ResortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22612C6B25261B48006B7B6F /* ResortView.swift */; };
 		22612C6F25261C87006B7B6F /* SkiDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22612C6E25261C87006B7B6F /* SkiDetailsView.swift */; };
 		22612C7225261CE6006B7B6F /* ResortDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22612C7125261CE6006B7B6F /* ResortDetailsView.swift */; };
+		227FA246252B08950002A1B9 /* FilterOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227FA245252B08950002A1B9 /* FilterOptionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		22612C6B25261B48006B7B6F /* ResortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResortView.swift; sourceTree = "<group>"; };
 		22612C6E25261C87006B7B6F /* SkiDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkiDetailsView.swift; sourceTree = "<group>"; };
 		22612C7125261CE6006B7B6F /* ResortDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResortDetailsView.swift; sourceTree = "<group>"; };
+		227FA245252B08950002A1B9 /* FilterOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				22612C7125261CE6006B7B6F /* ResortDetailsView.swift */,
 				22612C6B25261B48006B7B6F /* ResortView.swift */,
 				22612C68252614EF006B7B6F /* WelcomeView.swift */,
+				227FA245252B08950002A1B9 /* FilterOptionsView.swift */,
 				22612C5F2525F4B0006B7B6F /* Resort.swift */,
 				22612C622525F4D9006B7B6F /* Bundle-Decodable.swift */,
 				222DB13725283D9D007C3200 /* Facility.swift */,
@@ -167,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22612C69252614EF006B7B6F /* WelcomeView.swift in Sources */,
+				227FA246252B08950002A1B9 /* FilterOptionsView.swift in Sources */,
 				22612C6F25261C87006B7B6F /* SkiDetailsView.swift in Sources */,
 				22612C7225261CE6006B7B6F /* ResortDetailsView.swift in Sources */,
 				222DB13C2528471E007C3200 /* Favorites.swift in Sources */,
